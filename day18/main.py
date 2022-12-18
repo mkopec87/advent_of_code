@@ -1,6 +1,10 @@
 from collections import deque
 
+import matplotlib.pyplot as plt
 import numpy as np
+
+# Fixing random state for reproducibility
+np.random.seed(19680801)
 
 
 def main():
@@ -26,6 +30,8 @@ def main():
     print("##########")
     print(f"Result part 1: {result_part1}")
     print(f"Result part 2: {result_part2}")
+
+    plot_grid(grid)
 
 
 def load_points():
@@ -78,6 +84,13 @@ def find_reachable_cubes(grid):
                 visited[neighbour] = True
                 stack.append(neighbour)
     return visited
+
+
+def plot_grid(grid):
+    fig = plt.figure()
+    ax = fig.add_subplot(projection="3d")
+    ax.voxels(grid, edgecolor="k")
+    plt.savefig("plot.png")
 
 
 if __name__ == "__main__":
