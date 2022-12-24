@@ -7,8 +7,18 @@ from typing import Optional, Tuple
 import numpy as np
 
 
+class Direction(Enum):
+    NORTH = (-1, 0)
+    EAST = (0, 1)
+    SOUTH = (1, 0)
+    WEST = (0, -1)
+
+    def __lt__(self, other):
+        return self.value[0] < other.value[0] or self.value[1] < other.value[1]
+
+
 class Point:
-    def __init__(self, wall, blizzard=None):
+    def __init__(self, wall, blizzard: Optional[Direction] = None):
         self.blizzards = Counter()
         self.wall = wall
         if blizzard:
@@ -49,35 +59,30 @@ class Maze:
                 return False
         return True
 
-    def print(self):
-        print()
-        for x in range(self.grid.shape[0]):
-            print(str(x).ljust(3), end="")
-            for y in range(self.grid.shape[1]):
-                print(self.grid[x, y], end="")
-            print()
-        print()
-
-    def illegal_position(self, new_pos):
-        if not (0 <= new_pos[0] < self.grid.shape[0]):
+    def illegal_position(self, new_pos: Tuple[int, ...]):
+        if any([not (0 <= new_pos[i] < self.grid.shape[i]) for i in range(2)]):
             return True
         point = self.grid[new_pos]
-        return point.wall or (len(point.blizzards) > 0)
+        return point.wall or point.blizzards
 
 
-def read_maze(path):
+def read_input(path: str) -> Tuple[Maze, Tuple[int, ...], Tuple[int, ...]]:
     with open(path) as f:
         lines = [line.strip() for line in f.readlines()]
+
+    char_to_direction = {
+        "^": Direction.NORTH,
+        ">": Direction.EAST,
+        "v": Direction.SOUTH,
+        "<": Direction.WEST,
+    }
 
     maze = Maze((len(lines), len(lines[0])))
     for x, line in enumerate(lines):
         for y, ch in enumerate(line):
-            if ch == "#":
-                maze.grid[x, y] = Point(True)
-            elif ch == ".":
-                maze.grid[x, y] = Point(False)
-            else:
-                maze.grid[x, y] = Point(False, ch)
+            maze.grid[x, y] = Point(
+                wall=ch == "#", blizzard=char_to_direction.get(ch, None)
+            )
 
     start_pos = (
         0,
@@ -97,22 +102,7 @@ def read_maze(path):
     return maze, start_pos, end_pos
 
 
-class Direction(Enum):
-    NORTH = (-1, 0)
-    EAST = (0, 1)
-    SOUTH = (1, 0)
-    WEST = (0, -1)
-
-
-BLIZZARD_TO_DIRECTION = {
-    "^": Direction.NORTH,
-    ">": Direction.EAST,
-    "v": Direction.SOUTH,
-    "<": Direction.WEST,
-}
-
-
-def next_maze(maze):
+def next_maze(maze: Maze) -> Maze:
     new_maze = Maze(maze.grid.shape)
 
     # copy walls & empty points
@@ -121,29 +111,18 @@ def next_maze(maze):
 
     # move blizzards
     for index, point in np.ndenumerate(maze.grid):
-        if not point.wall:
-            for blizzard, count in point.blizzards.items():
-                direction = BLIZZARD_TO_DIRECTION[blizzard]
-                blizzard_next_pos = tuple(
-                    index[i] + direction.value[i] for i in range(2)
-                )
-                if new_maze.grid[blizzard_next_pos].wall:
-                    match direction:
-                        case Direction.NORTH:
-                            blizzard_next_pos = (
-                                new_maze.grid.shape[0] - 2,
-                                blizzard_next_pos[1],
-                            )
-                        case Direction.SOUTH:
-                            blizzard_next_pos = (1, blizzard_next_pos[1])
-                        case Direction.EAST:
-                            blizzard_next_pos = (blizzard_next_pos[0], 1)
-                        case Direction.WEST:
-                            blizzard_next_pos = (
-                                blizzard_next_pos[0],
-                                new_maze.grid.shape[1] - 2,
-                            )
-                new_maze.grid[blizzard_next_pos].add_blizzards(blizzard, count)
+        for direction, count in point.blizzards.items():
+            blizzard_next_pos = tuple(index[i] + direction.value[i] for i in range(2))
+            if new_maze.grid[blizzard_next_pos].wall:
+                blizzard_next_pos = list(blizzard_next_pos)
+                for i in range(2):
+                    if blizzard_next_pos[i] == new_maze.grid.shape[i] - 1:
+                        blizzard_next_pos[i] = 1
+                    elif blizzard_next_pos[i] == 0:
+                        blizzard_next_pos[i] = new_maze.grid.shape[i] - 2
+                blizzard_next_pos = tuple(blizzard_next_pos)
+
+            new_maze.grid[blizzard_next_pos].add_blizzards(direction, count)
 
     return new_maze
 
@@ -223,7 +202,7 @@ def a_star(
 def main():
     path = "input.txt"
 
-    maze, start_pos, end_pos = read_maze(path)
+    maze, start_pos, end_pos = read_input(path)
 
     print("maze shape:", maze.grid.shape)
     print("start", start_pos)
