@@ -2,7 +2,7 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass
 from enum import Enum
 from queue import PriorityQueue
-from typing import Optional, Tuple
+from typing import List, Optional, Tuple
 
 import numpy as np
 
@@ -66,6 +66,69 @@ class Maze:
         return point.wall or point.blizzards
 
 
+@dataclass
+class State:
+    position: Tuple[int, ...]
+    maze_id: int
+
+    def distance_to_end(self, end_pos):
+        return sum(abs(end_pos[i] - self.position[i]) for i in range(2))
+
+    def __hash__(self):
+        return hash(tuple([self.position, self.maze_id]))
+
+    def __lt__(self, other):
+        return False
+
+
+class PQ:
+    def __init__(self):
+        self.queue = PriorityQueue()
+        self.states = set()
+
+    def empty(self):
+        return len(self.states) == 0
+
+    def pop_min(self):
+        elem = self.queue.get()[1]
+        self.states.remove(elem)
+        return elem
+
+    def add(self, cost, state_id):
+        if state_id in self.states:
+            return
+        self.queue.put((cost, state_id))
+        self.states.add(state_id)
+
+
+def main():
+    path = "input.txt"
+
+    maze, start_pos, end_pos = read_input(path)
+
+    print("maze shape:", maze.grid.shape)
+    print("start", start_pos)
+    print("end", end_pos)
+
+    print("Enumerating mazes...")
+    mazes = enumerate_mazes(maze)
+    print(f"{len(mazes)} mazes found.")
+
+    # part 1
+    initial_state = State(start_pos, 0)
+    result_part1, current_state = a_star(initial_state, end_pos, mazes)
+
+    # part 2
+    time_back, current_state = a_star(current_state, start_pos, mazes)
+    time_back_again, _ = a_star(current_state, end_pos, mazes)
+    result_part2 = result_part1 + time_back + time_back_again
+
+    print()
+    print("##########")
+    print(f"Result part 1: {result_part1}")
+    print(f"Result part 2: {result_part2}")
+
+
 def read_input(path: str) -> Tuple[Maze, Tuple[int, ...], Tuple[int, ...]]:
     with open(path) as f:
         lines = [line.strip() for line in f.readlines()]
@@ -102,6 +165,18 @@ def read_input(path: str) -> Tuple[Maze, Tuple[int, ...], Tuple[int, ...]]:
     return maze, start_pos, end_pos
 
 
+def enumerate_mazes(maze: Maze) -> List[Maze]:
+    mazes = []
+    mazes_set = set()
+    while True:
+        if maze in mazes_set:
+            break
+        mazes.append(maze)
+        mazes_set.add(maze)
+        maze = next_maze(maze)
+    return mazes
+
+
 def next_maze(maze: Maze) -> Maze:
     new_maze = Maze(maze.grid.shape)
 
@@ -112,71 +187,32 @@ def next_maze(maze: Maze) -> Maze:
     # move blizzards
     for index, point in np.ndenumerate(maze.grid):
         for direction, count in point.blizzards.items():
-            blizzard_next_pos = tuple(index[i] + direction.value[i] for i in range(2))
-            if new_maze.grid[blizzard_next_pos].wall:
-                blizzard_next_pos = list(blizzard_next_pos)
-                for i in range(2):
-                    if blizzard_next_pos[i] == new_maze.grid.shape[i] - 1:
-                        blizzard_next_pos[i] = 1
-                    elif blizzard_next_pos[i] == 0:
-                        blizzard_next_pos[i] = new_maze.grid.shape[i] - 2
-                blizzard_next_pos = tuple(blizzard_next_pos)
+            blizzard_next_pos = [index[i] + direction.value[i] for i in range(2)]
 
-            new_maze.grid[blizzard_next_pos].add_blizzards(direction, count)
+            # wrap around walls
+            for i in range(2):
+                if blizzard_next_pos[i] == new_maze.grid.shape[i] - 1:
+                    blizzard_next_pos[i] = 1
+                elif blizzard_next_pos[i] == 0:
+                    blizzard_next_pos[i] = new_maze.grid.shape[i] - 2
+            new_maze.grid[tuple(blizzard_next_pos)].add_blizzards(direction, count)
 
     return new_maze
 
 
-@dataclass
-class State:
-    position: Tuple[int, ...]
-    maze_id: int
-
-    def distance_to_end(self, end_pos):
-        return sum(abs(end_pos[i] - self.position[i]) for i in range(2))
-
-    def __hash__(self):
-        return hash(tuple([self.position, self.maze_id]))
-
-    def __lt__(self, other):
-        return False
-
-
-class PQ:
-    def __init__(self):
-        self.queue = PriorityQueue()
-        self.states = set()
-
-    def empty(self):
-        return len(self.states) == 0
-
-    def pop_min(self):
-        elem = self.queue.get()[1]
-        self.states.remove(elem)
-        return elem
-
-    def add(self, cost, state_id):
-        if state_id in self.states:
-            return
-        self.queue.put((cost, state_id))
-        self.states.add(state_id)
-
-
-def a_star(
-    start_state: State, end_pos: Tuple[int, ...], mazes
-) -> Optional[Tuple[int, State]]:
+def a_star(start_state: State, end_pos: Tuple[int, ...], mazes) -> Tuple[int, State]:
     g_score = defaultdict(lambda: np.inf)
     f_score = defaultdict(lambda: np.inf)
 
     g_score[start_state] = 0
     f_score[start_state] = g_score[start_state] + start_state.distance_to_end(end_pos)
 
-    open_set = PQ()
-    open_set.add(f_score[start_state], start_state)
+    queue = PQ()
+    queue.add(f_score[start_state], start_state)
 
-    while not open_set.empty():
+    while not queue.empty():
 
-        current_state = open_set.pop_min()
+        current_state = queue.pop_min()
         if current_state.distance_to_end(end_pos) == 0:
             return g_score[current_state], current_state
 
@@ -194,49 +230,9 @@ def a_star(
                 f_score[new_state] = tentative_g_score + new_state.distance_to_end(
                     end_pos
                 )
-                open_set.add(f_score[new_state], new_state)
+                queue.add(f_score[new_state], new_state)
 
-    return None
-
-
-def main():
-    path = "input.txt"
-
-    maze, start_pos, end_pos = read_input(path)
-
-    print("maze shape:", maze.grid.shape)
-    print("start", start_pos)
-    print("end", end_pos)
-
-    print("Enumerating mazes...")
-    mazes = enumerate_mazes(maze)
-    print(f"{len(mazes)} mazes found.")
-
-    # part 1
-    initial_state = State(start_pos, 0)
-    result_part1, current_state = a_star(initial_state, end_pos, mazes)
-
-    # part 2
-    time_back, current_state = a_star(current_state, start_pos, mazes)
-    time_back_again, _ = a_star(current_state, end_pos, mazes)
-    result_part2 = result_part1 + time_back + time_back_again
-
-    print()
-    print("##########")
-    print(f"Result part 1: {result_part1}")
-    print(f"Result part 2: {result_part2}")
-
-
-def enumerate_mazes(maze: Maze):
-    mazes = []
-    mazes_set = set()
-    while True:
-        if maze in mazes_set:
-            break
-        mazes.append(maze)
-        mazes_set.add(maze)
-        maze = next_maze(maze)
-    return mazes
+    raise Exception("No solution found!")
 
 
 if __name__ == "__main__":
