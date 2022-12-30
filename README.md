@@ -11,7 +11,7 @@ My solutions to [Advent of Code](https://adventofcode.com/) programming puzzles 
 | 2020 | ![](https://img.shields.io/badge/2020%20stars%20&#11088;-0-yellow) | ![](https://img.shields.io/badge/2020%20days%20completed-0-red) |
 | 2019 | ![](https://img.shields.io/badge/2019%20stars%20&#11088;-0-yellow) | ![](https://img.shields.io/badge/2019%20days%20completed-0-red) |
 | 2018 | ![](https://img.shields.io/badge/2018%20stars%20&#11088;-0-yellow) | ![](https://img.shields.io/badge/2018%20days%20completed-0-red) |
-| 2017 | ![](https://img.shields.io/badge/2017%20stars%20&#11088;-34-yellow) | ![](https://img.shields.io/badge/2017%20days%20completed-0-red) |
+| 2017 | ![](https://img.shields.io/badge/2017%20stars%20&#11088;-0-yellow) | ![](https://img.shields.io/badge/2017%20days%20completed-0-red) |
 | 2016 | ![](https://img.shields.io/badge/2016%20stars%20&#11088;-34-yellow) | ![](https://img.shields.io/badge/2016%20days%20completed-0-red) |
 | 2015 | ![](https://img.shields.io/badge/2015%20stars%20&#11088;-34-yellow) | ![](https://img.shields.io/badge/2015%20days%20completed-0-red) |
 
