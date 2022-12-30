@@ -19,7 +19,7 @@ jobs:
           ref: master
 
       - name: Check if we already finished given year
-        run:
+        run: |
           r=`grep "${{ matrix.year }}%20stars%20&#11088;-50" README.md`
           echo DONE=$r >> $GITHUB_OUTPUT
           echo $r
