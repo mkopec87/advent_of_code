@@ -6,13 +6,26 @@ on:
 
 jobs:
   update-readme:
+    strategy:
+      max-parallel: 1
+      matrix:
+        year: [ 2020, 2021, 2022 ]
+
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
+
       - uses: k2bd/advent-readme-stars@v1
         with:
           userId: 1663352
           sessionCookie: ${{ secrets.AOC_SESSION }}
+          year: ${{ matrix.year }}
+
+      - name: Sleep for 60 seconds
+        run: sleep 60s
+        shell: bash
+
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Update README stars
+          commit_message: Update README stars for year ${{ matrix.year }}
