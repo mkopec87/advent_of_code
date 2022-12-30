@@ -14,13 +14,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          ref: master
 
       - uses: k2bd/advent-readme-stars@v1
         with:
           userId: 1663352
           sessionCookie: ${{ secrets.AOC_SESSION }}
           year: ${{ matrix.year }}
+          tableMarker: "<!--- advent_readme_stars_${{ matrix.year }} --->"
 
       - name: Sleep for 60 seconds
         run: sleep 60s
