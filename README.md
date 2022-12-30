@@ -102,4 +102,9 @@ My solutions to [Advent of Code](https://adventofcode.com/) programming puzzles 
 | :---: | :---: | :---: |
 <!--- advent_readme_stars_2017 --->
 <!--- advent_readme_stars_2016 --->
+## 2016 Results
+
+| Day | Part 1 | Part 2 |
+| :---: | :---: | :---: |
+<!--- advent_readme_stars_2016 --->
 <!--- advent_readme_stars_2015 --->
