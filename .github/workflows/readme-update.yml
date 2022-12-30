@@ -20,8 +20,8 @@ jobs:
 
       - name: Check if we already finished given year
         run: |
-          grep "${{ matrix.year }}%20stars%20&#11088;-50" README.md
-          r=$(grep "${{ matrix.year }}%20stars%20&#11088;-50" README.md)
+          grep -c "${{ matrix.year }}%20stars%20&#11088;-50" README.md
+          r=$(grep -c "${{ matrix.year }}%20stars%20&#11088;-50" README.md)
           echo "DONE=$r" >> $GITHUB_OUTPUT
           echo "$r"
         shell: bash
