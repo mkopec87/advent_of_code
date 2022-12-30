@@ -26,7 +26,19 @@ jobs:
           tableMarker: "<!--- advent_readme_stars_${{ matrix.year }} --->"
 
       - name: Sleep for 15 minutes # to prevent too many requests to AoC API
-        run: sleep 15m
+        run: sleep 1m
+        shell: bash
+
+      - uses: joblo2213/aoc-badges-action@v3
+        with:
+          userid: 1663352
+          session: ${{ secrets.AOC_SESSION }}
+          year: ${{ matrix.year }}
+          starsRegex: "(?<=https:\/\/img\.shields\.io\/badge\/${{ matrix.year }}%20stars%20⭐-)[0-9]+(?=-yellow)"
+          daysCompletedRegex: "(?<=https:\/\/img\.shields\.io\/badge\/${{ matrix.year }}%20days%20completed-)[0-9]+(?=-red)"
+
+      - name: Sleep for 15 minutes # to prevent too many requests to AoC API
+        run: sleep 1m
         shell: bash
 
       - uses: stefanzweifel/git-auto-commit-action@v4
