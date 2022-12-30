@@ -34,8 +34,8 @@ jobs:
           userid: 1663352
           session: ${{ secrets.AOC_SESSION }}
           year: ${{ matrix.year }}
-      #          starsRegex: "(?<=https:\/\/img\\.shields\\.io\/badge\/${{ matrix.year }}%20stars%20&#11088;-)[0-9]+(?=-yellow)"
-      #          daysCompletedRegex: "(?<=https:\/\/img\\.shields\\.io\/badge\/${{ matrix.year }}%20days%20completed-)[0-9]+(?=-red)"
+          #          starsRegex: "(?<=https:\/\/img\\.shields\\.io\/badge\/${{ matrix.year }}%20stars%20&#11088;-)[0-9]+(?=-yellow)"
+          daysCompletedRegex: "(?<=https:\/\/img\.shields\.io\/badge\/${{ matrix.year }}%20days%20completed-)[0-9]+(?=-red)"
 
       - name: Sleep for 15 minutes # to prevent too many requests to AoC API
         run: sleep 1m
