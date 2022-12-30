@@ -7,9 +7,9 @@ on:
 jobs:
   update-readme:
     strategy:
-      max-parallel: 1
+      max-parallel: 1 # to prevent too many requests to AoC API
       matrix:
-        year: [ 2020, 2021, 2022 ]
+        year: [ 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015 ]
 
     runs-on: ubuntu-latest
 
@@ -25,8 +25,8 @@ jobs:
           year: ${{ matrix.year }}
           tableMarker: "<!--- advent_readme_stars_${{ matrix.year }} --->"
 
-      - name: Sleep for 60 seconds
-        run: sleep 60s
+      - name: Sleep for 15 minutes # to prevent too many requests to AoC API
+        run: sleep 15m
         shell: bash
 
       - uses: stefanzweifel/git-auto-commit-action@v4
