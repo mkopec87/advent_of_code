@@ -22,7 +22,6 @@ jobs:
         run: |
           r=$(grep -c "${{ matrix.year }}%20stars%20&#11088;-50" README.md)
           echo "DONE=$r" >> $GITHUB_OUTPUT
-          echo "DONE=$r"
         shell: bash --noprofile --norc {0}
         id: check
 
@@ -34,9 +33,9 @@ jobs:
           year: ${{ matrix.year }}
           tableMarker: "<!--- advent_readme_stars_${{ matrix.year }} --->"
 
-      - name: Sleep for 15 minutes # to prevent too many requests to AoC API
+      - name: Sleep for 5 minutes # to prevent too many requests to AoC API
         if: steps.check.outputs.DONE == 0
-        run: sleep 1m
+        run: sleep 5m
         shell: bash
 
       - uses: joblo2213/aoc-badges-action@v3
@@ -48,9 +47,9 @@ jobs:
           starsRegex: '(?<=https:\/\/img\.shields\.io\/badge\/${{ matrix.year }}%20stars%20&#11088;-)[0-9]+(?=-yellow)'
           daysCompletedRegex: '(?<=https:\/\/img\.shields\.io\/badge\/${{ matrix.year }}%20days%20completed-)[0-9]+(?=-red)'
 
-      - name: Sleep for 15 minutes # to prevent too many requests to AoC API
+      - name: Sleep for 5 minutes # to prevent too many requests to AoC API
         if: steps.check.outputs.DONE == 0
-        run: sleep 1m
+        run: sleep 5m
         shell: bash
 
       - uses: stefanzweifel/git-auto-commit-action@v4
