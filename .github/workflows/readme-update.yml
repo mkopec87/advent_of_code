@@ -20,11 +20,10 @@ jobs:
 
       - name: Check if we already finished given year
         run: |
-          grep -c "${{ matrix.year }}%20stars%20&#11088;-50" README.md
           r=$(grep -c "${{ matrix.year }}%20stars%20&#11088;-50" README.md)
           echo "DONE=$r" >> $GITHUB_OUTPUT
-          echo "$r"
-        shell: bash
+          echo "DONE=$r"
+        shell: bash --noprofile --norc {0}
         id: check
 
       - uses: k2bd/advent-readme-stars@v1
