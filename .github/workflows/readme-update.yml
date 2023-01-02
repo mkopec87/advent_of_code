@@ -1,0 +1,45 @@
+name: Update readme
+
+on:
+  push:
+    branches: ["master"]
+
+jobs:
+  update-readme:
+    strategy:
+      max-parallel: 1 # to prevent too many requests to AoC API
+      matrix:
+        year: [2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: master
+
+      - name: Check if we already finished given year
+        run: |
+          r=$(grep -c "${{ matrix.year }}%20stars%20&#11088;-50" README.md)
+          echo "DONE=$r" >> $GITHUB_OUTPUT
+        shell: bash --noprofile --norc {0}
+        id: check
+
+      - uses: joblo2213/aoc-badges-action@v3
+        if: steps.check.outputs.DONE == 0
+        with:
+          userid: 1663352
+          session: ${{ secrets.AOC_SESSION }}
+          year: ${{ matrix.year }}
+          starsRegex: '(?<=https:\/\/img\.shields\.io\/badge\/${{ matrix.year }}%20stars%20&#11088;-)[0-9]+(?=-yellow)'
+          daysCompletedRegex: '(?<=https:\/\/img\.shields\.io\/badge\/${{ matrix.year }}%20days%20completed-)[0-9]+(?=-red)'
+
+      - name: Sleep for 5 minutes # to prevent too many requests to AoC API
+        if: steps.check.outputs.DONE == 0
+        run: sleep 5m
+        shell: bash
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        if: steps.check.outputs.DONE == 0
+        with:
+          commit_message: Update README stars for year ${{ matrix.year }}
