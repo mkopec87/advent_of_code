@@ -15,7 +15,9 @@ def main(debug: bool) -> None:
 
 
 def solve(digits: List[int], shift: int) -> int:
-    return sum([d for i, d in enumerate(digits) if digits[(i + shift) % len(digits)] == d])
+    return sum(
+        [d for i, d in enumerate(digits) if digits[(i + shift) % len(digits)] == d]
+    )
 
 
 if __name__ == "__main__":
