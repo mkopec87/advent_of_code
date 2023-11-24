@@ -10,7 +10,6 @@ def main():
 
     increased = 0
     for m in measurements[3:]:
-
         prev_sum = sum(prev)
 
         prev.popleft()

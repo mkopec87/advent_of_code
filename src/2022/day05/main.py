@@ -27,7 +27,6 @@ def main():
     stacks_part1 = [s.copy() for s in stacks]
     stacks_part2 = [s.copy() for s in stacks]
     for move in moves:
-
         for _ in range(move.count):
             item = stacks_part1[move.from_stack].pop()
             stacks_part1[move.to_stack].append(item)
