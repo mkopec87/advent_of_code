@@ -22,7 +22,6 @@ def score_line(line):
 
 
 def score_line2(line):
-
     stack = deque()
     for sign in line:
         if is_opening(sign):

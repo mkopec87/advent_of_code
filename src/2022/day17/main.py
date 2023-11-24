@@ -202,7 +202,6 @@ def drop_rock(chamber, directions, rocks):
     x, y = chamber.get_rock_initial_position(rock)
     falling = True
     while falling:
-
         # hot jet
         direction = directions.next()
         y2 = y + (1 if direction == Direction.RIGHT else -1)

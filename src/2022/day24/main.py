@@ -211,7 +211,6 @@ def a_star(start_state: State, end_pos: Tuple[int, ...], mazes) -> Tuple[int, St
     queue.add(f_score[start_state], start_state)
 
     while not queue.empty():
-
         current_state = queue.pop_min()
         if current_state.distance_to_end(end_pos) == 0:
             return g_score[current_state], current_state

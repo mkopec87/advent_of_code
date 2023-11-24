@@ -30,7 +30,6 @@ def solve(moves, line_len):
 
     for direction, count in moves:
         for _ in range(count):
-
             # move head
             head_pos = node_to_pos[0]
             if direction == "U":

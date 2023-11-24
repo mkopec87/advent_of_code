@@ -67,7 +67,6 @@ def list_to_string(initial_list: List[Number]) -> str:
 
 def mix_list(initial_list: List[Number]) -> None:
     for n in initial_list:
-
         shift = n.value % (len(initial_list) - 1)
 
         while shift > 0:
