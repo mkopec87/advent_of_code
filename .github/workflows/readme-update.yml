@@ -9,7 +9,7 @@ jobs:
     strategy:
       max-parallel: 1 # to prevent too many requests to AoC API
       matrix:
-        year: [2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015]
+        year: [2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015]
 
     runs-on: ubuntu-latest
 
