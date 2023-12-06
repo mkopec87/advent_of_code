@@ -1,0 +1,9 @@
+seeds: 12 42 11 33
+
+seed-to-gold map:
+23 14 55
+33 11 133
+
+gold-to-location map:
+1 2 44
+3 4 4
