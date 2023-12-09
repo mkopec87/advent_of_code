@@ -1,0 +1,11 @@
+LRLR
+
+AAA = (ZZZ, ZZZ)
+BBA = (BBB, YYY)
+BBB = (YYY, XXZ)
+XXZ = (BBB, YYY)
+CCA = (CCB, YYY)
+CCB = (CCZ, CCZ)
+CCZ = (CCB, CCB)
+YYY = (YYY, YYY)
+ZZZ = (ZZZ, ZZZ)
