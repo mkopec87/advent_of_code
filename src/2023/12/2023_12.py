@@ -100,5 +100,5 @@ def main(debug: bool) -> None:
 
 if __name__ == "__main__":
     debug_mode = True
-    debug_mode = False
+    # debug_mode = False
     main(debug_mode)
