@@ -73,10 +73,10 @@ def main(debug: bool) -> None:
     # part 1
     start = {Color.RED: 12, Color.GREEN: 13, Color.BLUE: 14}
     possible_games = [g for g in games if g.possible(start)]
-    result_part1 = reduce(operator.add, map(lambda g: g.game_id, possible_games))
+    result_part1 = reduce(operator.add, map(lambda g: g.game_id, possible_games), 0)
 
     # part 2
-    result_part2 = reduce(operator.add, map(lambda g: g.power(), games))
+    result_part2 = reduce(operator.add, map(lambda g: g.power(), games), 0)
 
     submit_or_print(result_part1, result_part2, debug)
 
