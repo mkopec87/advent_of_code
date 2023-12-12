@@ -1,3 +1,4 @@
 advent-of-code-data
 black
 isort
+tqdm
