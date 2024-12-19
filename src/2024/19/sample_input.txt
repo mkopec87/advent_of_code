@@ -1,0 +1,7 @@
+br, w, rr, bgg, r
+
+brw
+wbr
+gbbwrr
+bggrrrw
+bggbrrrw
