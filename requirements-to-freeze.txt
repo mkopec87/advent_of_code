@@ -1,8 +1,8 @@
 advent-of-code-data
 black
 isort
-networkx
 matplotlib
-scipy
+networkx
 numpy
+scipy
 tqdm
