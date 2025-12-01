@@ -1,0 +1,38 @@
+[dependency-groups]
+dev = [
+  "deptry",
+  "graphviz",
+  "mypy",
+  "pre-commit",
+  "pytest",
+  "pytest-cov",
+]
+
+[project]
+dependencies = [
+  "advent-of-code-data",
+  "matplotlib",
+  "networkx",
+  "numpy",
+  "scipy",
+  "tqdm",
+]
+description = "My solutions to Advent of Code programming puzzles."
+name = "advent-of-code"
+readme = "README.md"
+requires-python = ">=3.14"
+version = "1.0.0"
+
+[tool.ruff]
+indent-width = 4
+line-length = 88
+target-version = "py312"
+
+[tool.tomlsort]
+all = true
+in_place = true
+trailing_comma_inline_array = true
+
+[tool.vulture]
+min_confidence = 80
+paths = ["src"]

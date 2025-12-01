@@ -1,8 +1,0 @@
-advent-of-code-data
-black
-isort
-matplotlib
-networkx
-numpy
-scipy
-tqdm

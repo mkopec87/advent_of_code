@@ -1,11 +1,9 @@
-from typing import Any, Optional
+from typing import Any
 
 from aocd import submit
 
 
-def submit_or_print(
-    result_part1: Optional[Any], result_part2: Optional[Any], debug: bool
-):
+def submit_or_print(result_part1: Any | None, result_part2: Any | None, debug: bool):
     print("Result part 1:", result_part1)
     print("Result part 2:", result_part2)
     if not debug:
