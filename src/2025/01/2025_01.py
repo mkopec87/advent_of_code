@@ -44,7 +44,6 @@ def parse_input(input_data: str) -> list[Rotation]:
 def solve(
     init_pos: int, limit: int, commands: list[Rotation], part2: bool = False
 ) -> int:
-    print()
     result = 0
 
     current_pos = init_pos
@@ -76,5 +75,5 @@ def solve(
 
 if __name__ == "__main__":
     debug_mode = True
-    debug_mode = False
+    # debug_mode = False
     main(debug_mode)
