@@ -6,7 +6,7 @@ repos:
     -   id: pre-commit-update
 
 -   repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.9.16
+    rev: 0.9.17
     hooks:
       # Update the uv lockfile
     -   id: uv-lock
@@ -45,6 +45,7 @@ repos:
     -   id: check-yaml
       # Makes sure files end in a newline and only a newline
     -   id: end-of-file-fixer
+        exclude: src/.*/sample_input.txt
       # Removes UTF-8 byte order marker
     -   id: fix-byte-order-marker
       # Replaces or checks mixed line ending
@@ -65,7 +66,7 @@ repos:
     -   id: yamllint
 
 -   repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.8
+    rev: v0.14.9
     hooks:
       # Run the linter
     -   id: ruff-check

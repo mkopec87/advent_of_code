@@ -1,12 +1,11 @@
 from itertools import combinations
 from math import prod
-from typing import Set
 
 from src.utils.data import load_data
 from src.utils.submission import submit_or_print
 
 
-def solve(numbers: Set[int], numbers_count: int, target_sum: int) -> int:
+def solve(numbers: set[int], numbers_count: int, target_sum: int) -> int:
     sets = combinations(numbers, numbers_count)
     matching_sets = list(filter(lambda s: sum(s) == target_sum, sets))
     assert len(matching_sets) == 1

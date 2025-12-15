@@ -1,6 +1,5 @@
 from itertools import product
 from operator import add, mul
-from typing import List
 
 from src.utils.data import load_data
 from src.utils.submission import submit_or_print
@@ -25,7 +24,7 @@ def main(debug: bool) -> None:
     submit_or_print(result_part1, result_part2, debug)
 
 
-def solve(input_list: List[int], val1: int, val2: int) -> List[int]:
+def solve(input_list: list[int], val1: int, val2: int) -> list[int]:
     try:
         memory = input_list.copy()
         memory[1] = val1

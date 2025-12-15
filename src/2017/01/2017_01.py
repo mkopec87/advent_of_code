@@ -1,5 +1,3 @@
-from typing import List
-
 from src.utils.data import load_data
 from src.utils.submission import submit_or_print
 
@@ -14,7 +12,7 @@ def main(debug: bool) -> None:
     submit_or_print(result_part1, result_part2, debug)
 
 
-def solve(digits: List[int], shift: int) -> int:
+def solve(digits: list[int], shift: int) -> int:
     return sum(
         [d for i, d in enumerate(digits) if digits[(i + shift) % len(digits)] == d]
     )

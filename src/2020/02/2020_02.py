@@ -1,12 +1,12 @@
 import re
 from collections import Counter
-from typing import Any, List, Tuple
+from typing import Any
 
 from src.utils.data import load_data
 from src.utils.submission import submit_or_print
 
 
-def parse_input(input_data: str) -> List[Tuple[Any, ...]]:
+def parse_input(input_data: str) -> list[tuple[Any, ...]]:
     result = []
     for line in input_data.splitlines():
         m = re.match(r"(\d+)-(\d+) ([a-z]): ([a-z]+)", line)
@@ -23,14 +23,14 @@ def main(debug: bool) -> None:
 
     lines = parse_input(input_data)
 
-    def correct_part1(line: Tuple[Any, ...]):
+    def correct_part1(line: tuple[Any, ...]):
         first_number, second_number, character, password = line
         c = Counter(password)
         return first_number <= c[character] <= second_number
 
     result_part1 = len(list(filter(correct_part1, lines)))
 
-    def correct_part2(line: Tuple[Any, ...]):
+    def correct_part2(line: tuple[Any, ...]):
         first_number, second_number, character, password = line
         password = " " + password  # make indexing 1-based
         return (password[first_number] == character) ^ (

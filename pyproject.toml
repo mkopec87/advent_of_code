@@ -6,6 +6,7 @@ dev = [
   "pre-commit",
   "pytest",
   "pytest-cov",
+  "scipy-stubs",
 ]
 
 [project]
@@ -16,6 +17,7 @@ dependencies = [
   "numpy",
   "scipy",
   "tqdm",
+  "z3-solver>=4.15.4.0",
 ]
 description = "My solutions to Advent of Code programming puzzles."
 name = "advent-of-code"
