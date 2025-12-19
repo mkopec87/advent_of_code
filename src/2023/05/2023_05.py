@@ -1,6 +1,5 @@
 import dataclasses
 import re
-from typing import Dict, List, Set
 
 from src.utils.data import load_data
 from src.utils.submission import submit_or_print
@@ -24,7 +23,7 @@ class MapRange:
 class Map:
     map_from: str
     map_to: str
-    ranges: List[MapRange]
+    ranges: list[MapRange]
 
 
 def main(debug: bool) -> None:
@@ -43,7 +42,7 @@ def main(debug: bool) -> None:
     submit_or_print(result_part1, result_part2, debug)
 
 
-def load_maps(input_data: str) -> Dict[str, Map]:
+def load_maps(input_data: str) -> dict[str, Map]:
     lines = input_data.splitlines()
     maps = {}
     line_nr = 2
@@ -54,9 +53,9 @@ def load_maps(input_data: str) -> Dict[str, Map]:
         ranges = []
         line_nr += 1
         while line_nr < len(lines) and lines[line_nr]:
-            dest_start, source_start, range_len = [
+            dest_start, source_start, range_len = (
                 int(n.strip()) for n in lines[line_nr].split(" ")
-            ]
+            )
             end = source_start + range_len
             shift = dest_start - source_start
             ranges.append(MapRange(source_start, end, shift))
@@ -67,12 +66,12 @@ def load_maps(input_data: str) -> Dict[str, Map]:
     return maps
 
 
-def load_seeds(input_data: str) -> Set[int]:
+def load_seeds(input_data: str) -> set[int]:
     first_line = input_data.splitlines()[0]
     return {int(n) for n in re.findall(r"\d+", first_line)}
 
 
-def load_ranges(input_data: str) -> List[Range]:
+def load_ranges(input_data: str) -> list[Range]:
     seed_ranges = []
     first_line = input_data.splitlines()[0]
     numbers = [int(n.strip()) for n in first_line.split(":")[1].strip().split(" ")]
@@ -85,7 +84,7 @@ def load_ranges(input_data: str) -> List[Range]:
     return seed_ranges
 
 
-def solve_part1(maps: Dict[str, Map], seeds: Set[int]) -> int:
+def solve_part1(maps: dict[str, Map], seeds: set[int]) -> int:
     values = []
     for value in seeds:
         property = "seed"

@@ -1,5 +1,4 @@
 import operator
-from typing import Dict, List
 
 import matplotlib.pyplot as plt
 import networkx as nx
@@ -107,7 +106,7 @@ def main():
     draw_tree(root_node)
 
 
-def parse_nodes(lines: List[str]) -> Dict[str, Node]:
+def parse_nodes(lines: list[str]) -> dict[str, Node]:
     name_to_node = {}
     for line in lines:
         spl = line.split(":")

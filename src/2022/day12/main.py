@@ -1,6 +1,5 @@
 from collections import deque
 from dataclasses import dataclass, field
-from typing import Set
 
 import numpy as np
 
@@ -10,7 +9,7 @@ class Position:
     x: int
     y: int
     elevation: int
-    neighbours: Set["Position"] = field(default_factory=set)
+    neighbours: set["Position"] = field(default_factory=set)
     visited: bool = False
     distance: int = np.inf
 

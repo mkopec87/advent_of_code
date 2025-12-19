@@ -1,5 +1,3 @@
-from typing import List, Tuple
-
 from src.utils.data import load_data
 from src.utils.submission import submit_or_print
 
@@ -22,7 +20,7 @@ def main(debug: bool) -> None:
     submit_or_print(result_part1, result_part2, debug)
 
 
-def parse_input(input_data: str) -> Tuple[List[List[int]], List[List[int]], int]:
+def parse_input(input_data: str) -> tuple[list[list[int]], list[list[int]], int]:
     locks = []
     keys = []
     spl = input_data.split("\n\n")
@@ -44,7 +42,7 @@ def parse_input(input_data: str) -> Tuple[List[List[int]], List[List[int]], int]
     return keys, locks, height
 
 
-def fit(key: List[int], lock: List[int], height: int) -> bool:
+def fit(key: list[int], lock: list[int], height: int) -> bool:
     for l, k in zip(lock, key):
         if l + k > height:
             return False

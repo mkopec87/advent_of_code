@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import List
 
 from src.utils.data import load_data
 from src.utils.submission import submit_or_print
@@ -7,7 +6,7 @@ from src.utils.submission import submit_or_print
 
 @dataclass
 class Report:
-    levels: List[int]
+    levels: list[int]
 
 
 def main(debug: bool) -> None:
@@ -36,7 +35,7 @@ def main(debug: bool) -> None:
     submit_or_print(result_part1, result_part2, debug)
 
 
-def parse_input(input_data: str) -> List[Report]:
+def parse_input(input_data: str) -> list[Report]:
     reports = []
     for line in input_data.splitlines():
         levels = [int(s) for s in line.split(" ")]
@@ -44,7 +43,7 @@ def parse_input(input_data: str) -> List[Report]:
     return reports
 
 
-def safe(levels: List[int]) -> bool:
+def safe(levels: list[int]) -> bool:
     pairs = list(zip(levels, levels[1:]))
     diffs = list(map(lambda p: p[0] - p[1], pairs))
     signs = {d > 0 for d in diffs}

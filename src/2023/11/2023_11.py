@@ -1,5 +1,4 @@
 import itertools
-from typing import List, Tuple
 
 import numpy as np
 
@@ -18,7 +17,7 @@ def main(debug: bool) -> None:
     submit_or_print(result_part1, result_part2, debug)
 
 
-def parse_input(input_data: str) -> Tuple[List[Tuple[int, int]], List[int], List[int]]:
+def parse_input(input_data: str) -> tuple[list[tuple[int, int]], list[int], list[int]]:
     rows = []
     for line in input_data.splitlines():
         row = [ch for ch in line]
@@ -41,9 +40,9 @@ def parse_input(input_data: str) -> Tuple[List[Tuple[int, int]], List[int], List
 
 
 def solve(
-    galaxies: List[Tuple[int, int]],
-    empty_xs: List[int],
-    empty_ys: List[int],
+    galaxies: list[tuple[int, int]],
+    empty_xs: list[int],
+    empty_ys: list[int],
     multiplier=2,
 ) -> int:
     total = 0

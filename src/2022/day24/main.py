@@ -2,7 +2,6 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass
 from enum import Enum
 from queue import PriorityQueue
-from typing import List, Optional, Tuple
 
 import numpy as np
 
@@ -18,7 +17,7 @@ class Direction(Enum):
 
 
 class Point:
-    def __init__(self, wall, blizzard: Optional[Direction] = None):
+    def __init__(self, wall, blizzard: Direction | None = None):
         self.blizzards = Counter()
         self.wall = wall
         if blizzard:
@@ -59,7 +58,7 @@ class Maze:
                 return False
         return True
 
-    def illegal_position(self, new_pos: Tuple[int, ...]):
+    def illegal_position(self, new_pos: tuple[int, ...]):
         if any([not (0 <= new_pos[i] < self.grid.shape[i]) for i in range(2)]):
             return True
         point = self.grid[new_pos]
@@ -68,7 +67,7 @@ class Maze:
 
 @dataclass
 class State:
-    position: Tuple[int, ...]
+    position: tuple[int, ...]
     maze_id: int
 
     def distance_to_end(self, end_pos):
@@ -129,7 +128,7 @@ def main():
     print(f"Result part 2: {result_part2}")
 
 
-def read_input(path: str) -> Tuple[Maze, Tuple[int, ...], Tuple[int, ...]]:
+def read_input(path: str) -> tuple[Maze, tuple[int, ...], tuple[int, ...]]:
     with open(path) as f:
         lines = [line.strip() for line in f.readlines()]
 
@@ -165,7 +164,7 @@ def read_input(path: str) -> Tuple[Maze, Tuple[int, ...], Tuple[int, ...]]:
     return maze, start_pos, end_pos
 
 
-def enumerate_mazes(maze: Maze) -> List[Maze]:
+def enumerate_mazes(maze: Maze) -> list[Maze]:
     mazes = []
     mazes_set = set()
     while True:
@@ -200,7 +199,7 @@ def next_maze(maze: Maze) -> Maze:
     return new_maze
 
 
-def a_star(start_state: State, end_pos: Tuple[int, ...], mazes) -> Tuple[int, State]:
+def a_star(start_state: State, end_pos: tuple[int, ...], mazes) -> tuple[int, State]:
     g_score = defaultdict(lambda: np.inf)
     f_score = defaultdict(lambda: np.inf)
 

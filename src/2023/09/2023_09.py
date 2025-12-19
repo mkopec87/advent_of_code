@@ -1,4 +1,4 @@
-from typing import Callable, List
+from collections.abc import Callable
 
 from src.utils.data import load_data
 from src.utils.submission import submit_or_print
@@ -15,14 +15,14 @@ def main(debug: bool) -> None:
     submit_or_print(result_part1, result_part2, debug)
 
 
-def parse_input(input_data: str) -> List[List[int]]:
+def parse_input(input_data: str) -> list[list[int]]:
     lines = input_data.splitlines()
     seqs = [[int(s) for s in l.split(" ")] for l in lines]
     return seqs
 
 
 def solve(
-    seqs: List[List[int]], scoring_function: Callable[[List[List[int]]], int]
+    seqs: list[list[int]], scoring_function: Callable[[list[list[int]]], int]
 ) -> int:
     total = 0
     for seq in seqs:
@@ -35,7 +35,7 @@ def solve(
     return total
 
 
-def score_part1(rows: List[List[int]]) -> int:
+def score_part1(rows: list[list[int]]) -> int:
     inc = 0
     for row in reversed(rows):
         row.append(row[-1] + inc)
@@ -43,7 +43,7 @@ def score_part1(rows: List[List[int]]) -> int:
     return rows[0][-1]
 
 
-def score_part2(rows: List[List[int]]) -> int:
+def score_part2(rows: list[list[int]]) -> int:
     inc = 0
     for row in reversed(rows):
         row.insert(0, (row[0] - inc))

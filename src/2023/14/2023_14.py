@@ -1,5 +1,3 @@
-from typing import Tuple
-
 import numpy as np
 from tqdm import tqdm
 
@@ -51,7 +49,7 @@ def parse_input(input_data: str) -> np.array:
     return np.array(rows)
 
 
-def roll(grid: np.array, direction: Tuple[int, int]) -> None:
+def roll(grid: np.array, direction: tuple[int, int]) -> None:
     changed = True
     while changed:
         changed = False

@@ -1,6 +1,5 @@
 import itertools
 from collections import Counter
-from typing import List
 
 import networkx as nx
 import numpy as np
@@ -15,7 +14,7 @@ class Scanner:
         self.positions: np.array = None
         self.location = location
 
-    def add_position(self, position: List[int]):
+    def add_position(self, position: list[int]):
         if self.positions is None:
             self.positions = np.array(position)
         else:

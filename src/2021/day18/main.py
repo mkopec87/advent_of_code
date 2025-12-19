@@ -1,5 +1,3 @@
-from typing import List
-
 INPUT_TXT = "input.txt"
 # INPUT_TXT = "input-small.txt"
 
@@ -77,7 +75,7 @@ class Node:
 
         return False
 
-    def leaves(self) -> List["Node"]:
+    def leaves(self) -> list["Node"]:
         if self.leaf:
             return [self]
         else:

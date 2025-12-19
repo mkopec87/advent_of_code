@@ -1,6 +1,5 @@
 from functools import lru_cache
 from queue import PriorityQueue
-from typing import Dict, List, Tuple
 
 import networkx as nx
 from matplotlib import pyplot as plt
@@ -33,7 +32,7 @@ def main() -> None:
     print(f"Result part 2: {result_part2}")  # expected for small input: 44169
 
 
-def parse_state(lines: List[str]) -> str:
+def parse_state(lines: list[str]) -> str:
     state = ""
     for i, line in enumerate(lines):
         state += line.replace("#", "")
@@ -81,7 +80,7 @@ def draw_graph(graph: nx.Graph, target_path: str) -> None:
     plt.clf()
 
 
-def dijkstra(start_state: str, graph: nx.Graph) -> Dict[str, int]:
+def dijkstra(start_state: str, graph: nx.Graph) -> dict[str, int]:
     state2cost = {start_state: 0}
     pq = PriorityQueue()
     pq.put((0, start_state))
@@ -100,7 +99,7 @@ def dijkstra(start_state: str, graph: nx.Graph) -> Dict[str, int]:
     return state2cost
 
 
-def get_neighbours(state: str, graph: nx.Graph) -> List[Tuple[str, int]]:
+def get_neighbours(state: str, graph: nx.Graph) -> list[tuple[str, int]]:
     result = []
     for index, ch in enumerate(state):
         if ch == ".":

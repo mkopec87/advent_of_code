@@ -1,7 +1,6 @@
 import dataclasses
 import itertools
 from collections import Counter
-from typing import Tuple
 
 INPUT_TXT = "input.txt"
 # INPUT_TXT = "input-small.txt"
@@ -21,8 +20,8 @@ class DeterministicDice:
 
 @dataclasses.dataclass(frozen=True)
 class State:
-    positions: Tuple[int, int]
-    points: Tuple[int, int] = (0, 0)
+    positions: tuple[int, int]
+    points: tuple[int, int] = (0, 0)
     next_player_index: int = 0
 
     def finished(self, limit):

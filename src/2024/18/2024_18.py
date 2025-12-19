@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import List
 
 import networkx as nx
 import numpy as np
@@ -92,7 +91,7 @@ def main(debug: bool) -> None:
     submit_or_print(result_part1, result_part2, debug)
 
 
-def parse_input(input_data: str) -> List[Position]:
+def parse_input(input_data: str) -> list[Position]:
     byte_positions = []
     for line in input_data.splitlines():
         spl = list(map(int, line.split(",")))

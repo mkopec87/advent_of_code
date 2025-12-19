@@ -2,7 +2,7 @@ import dataclasses
 import enum
 from collections import Counter
 from functools import cmp_to_key, partial
-from typing import Callable, List
+from collections.abc import Callable
 
 from src.utils.data import load_data
 from src.utils.submission import submit_or_print
@@ -26,7 +26,7 @@ class Type(enum.IntEnum):
 
 @dataclasses.dataclass
 class Hand:
-    cards: List[str]
+    cards: list[str]
     bid: int
 
     def hand_type_part1(self) -> Type:
@@ -42,7 +42,7 @@ class Hand:
         return self._hand_type(cards)
 
     @staticmethod
-    def _hand_type(cards: List[str]) -> Type:
+    def _hand_type(cards: list[str]) -> Type:
         counts = Counter(cards)
         most_common = counts.most_common()[0]
         if most_common[1] == 5:
@@ -88,7 +88,7 @@ def main(debug: bool) -> None:
     submit_or_print(result_part1, result_part2, debug)
 
 
-def parse_input(input_data: str) -> List[Hand]:
+def parse_input(input_data: str) -> list[Hand]:
     hands = []
     for line in input_data.splitlines():
         cards = [c for c in line[:5]]
@@ -97,7 +97,7 @@ def parse_input(input_data: str) -> List[Hand]:
     return hands
 
 
-def solve(hands: List[Hand], compare_function: Callable[[Hand, Hand], bool]) -> int:
+def solve(hands: list[Hand], compare_function: Callable[[Hand, Hand], bool]) -> int:
     total = 0
     for rank, hand in enumerate(
         sorted(hands, key=cmp_to_key(compare_function)), start=1

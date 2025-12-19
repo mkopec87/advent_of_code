@@ -1,6 +1,5 @@
 import math
 from dataclasses import dataclass
-from typing import List, Union
 
 import numpy as np
 
@@ -23,14 +22,14 @@ class Packet:
         return self.compare(self.data, other.data) <= 0
 
     @staticmethod
-    def compare(left: Union[int, List], right: Union[int, List]) -> int:
+    def compare(left: int | list, right: int | list) -> int:
         # return -1 if left < right
         # return 0 in left = right
         # return 1 if left > right
 
         if isinstance(left, int) and isinstance(right, int):
             return np.sign(left - right)
-        elif isinstance(left, List) and isinstance(right, List):
+        elif isinstance(left, list) and isinstance(right, list):
             for index, elem in enumerate(left):
                 if index >= len(right):
                     return 1

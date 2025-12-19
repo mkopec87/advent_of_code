@@ -1,6 +1,5 @@
 import re
 from collections import Counter
-from typing import List, Tuple
 
 from src.utils.data import load_data
 from src.utils.submission import submit_or_print
@@ -20,7 +19,7 @@ def main(debug: bool) -> None:
     submit_or_print(result_part1, result_part2, debug)
 
 
-def parse_lists(input_data: str) -> Tuple[List[int], List[int]]:
+def parse_lists(input_data: str) -> tuple[list[int], list[int]]:
     first = []
     second = []
     for l in input_data.splitlines():

@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import List, Optional
 
 
 @dataclass
@@ -24,7 +23,7 @@ def main():
 
 
 def solve(
-    input_file: str, decryption_key: Optional[int] = 1, mix_count: Optional[int] = 1
+    input_file: str, decryption_key: int | None = 1, mix_count: int | None = 1
 ) -> int:
     print()
 
@@ -39,7 +38,7 @@ def solve(
     return score(initial_list)
 
 
-def load_numbers(path: str, multiplier: int = 1) -> List[Number]:
+def load_numbers(path: str, multiplier: int = 1) -> list[Number]:
     initial_list = []
     with open(path) as f:
         for line in f.readlines():
@@ -53,7 +52,7 @@ def load_numbers(path: str, multiplier: int = 1) -> List[Number]:
     return initial_list
 
 
-def list_to_string(initial_list: List[Number]) -> str:
+def list_to_string(initial_list: list[Number]) -> str:
     values = []
     current = initial_list[0]
     max_values_shown = 3
@@ -65,7 +64,7 @@ def list_to_string(initial_list: List[Number]) -> str:
     return "[" + ", ".join(values) + "]"
 
 
-def mix_list(initial_list: List[Number]) -> None:
+def mix_list(initial_list: list[Number]) -> None:
     for n in initial_list:
         shift = n.value % (len(initial_list) - 1)
 
@@ -97,7 +96,7 @@ def mix_list(initial_list: List[Number]) -> None:
             current_prev.next = current_next
 
 
-def score(initial_list: List[Number]) -> int:
+def score(initial_list: list[Number]) -> int:
     start_value = 0
     shifts = [1000, 1000, 1000]
 

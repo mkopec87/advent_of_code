@@ -1,6 +1,5 @@
 import dataclasses
 import re
-from typing import List
 
 from src.utils.data import load_data
 from src.utils.submission import submit_or_print
@@ -15,7 +14,7 @@ class Lens:
 @dataclasses.dataclass
 class Box:
     nr: int
-    lenses: List
+    lenses: list
 
     def remove(self, label: str) -> None:
         for lens in self.lenses:

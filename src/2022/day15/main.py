@@ -1,6 +1,5 @@
 import re
 from dataclasses import dataclass
-from typing import Tuple
 
 import pandas as pd
 from tqdm import tqdm
@@ -12,8 +11,8 @@ def manhattan(point1, point2):
 
 @dataclass
 class Sensor:
-    pos: Tuple[int, ...]
-    beacon: Tuple[int, ...]
+    pos: tuple[int, ...]
+    beacon: tuple[int, ...]
 
     def dist(self):
         return manhattan(self.pos, self.beacon)

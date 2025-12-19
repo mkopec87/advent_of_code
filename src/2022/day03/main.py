@@ -1,9 +1,10 @@
 import itertools
 from functools import reduce
-from typing import Any, Iterator, List, Set, Tuple
+from typing import Any
+from collections.abc import Iterator
 
 
-def partition(a_list: List[Any], size: int) -> Iterator[Tuple[Any]]:
+def partition(a_list: list[Any], size: int) -> Iterator[tuple[Any]]:
     it = iter(a_list)
     return iter(lambda: tuple(itertools.islice(it, size)), ())
 
@@ -16,7 +17,7 @@ def item_to_score(item: str) -> int:
     return score
 
 
-def item_from_singleton_set(items: Set[Any]) -> Any:
+def item_from_singleton_set(items: set[Any]) -> Any:
     assert len(items) == 1
     return list(items)[0]
 

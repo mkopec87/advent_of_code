@@ -40,7 +40,7 @@ def main():
         if v - 1 <= c % 40 <= v + 1:
             matrix[x, y] = 1
 
-    print(f"Result part 2:")
+    print("Result part 2:")
     show(matrix)
 
 

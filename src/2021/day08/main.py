@@ -1,6 +1,5 @@
 from collections import defaultdict
 from functools import reduce
-from typing import Set
 
 
 def get_set_only_item(s):
@@ -53,8 +52,8 @@ def main():
         two_letters = len2signals[2][0]
         three_letters = len2signals[3][0]
         four_letters = len2signals[4][0]
-        five_letters_common: Set[str] = reduce(set.intersection, len2signals[5])
-        six_letters_common: Set[str] = reduce(set.intersection, len2signals[6])
+        five_letters_common: set[str] = reduce(set.intersection, len2signals[5])
+        six_letters_common: set[str] = reduce(set.intersection, len2signals[6])
 
         a_mapping = three_letters - two_letters
         b_d_mapping = four_letters - two_letters

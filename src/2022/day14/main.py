@@ -1,13 +1,12 @@
 from dataclasses import dataclass
-from typing import Tuple
 
 import numpy as np
 
 
 @dataclass
 class Line:
-    start: Tuple[int, ...]
-    end: Tuple[int, ...]
+    start: tuple[int, ...]
+    end: tuple[int, ...]
 
 
 def print_cave(m):

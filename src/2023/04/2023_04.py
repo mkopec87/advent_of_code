@@ -1,7 +1,6 @@
 import dataclasses
 import math
 import re
-from typing import List, Set
 
 from src.utils.data import load_data
 from src.utils.submission import submit_or_print
@@ -9,14 +8,14 @@ from src.utils.submission import submit_or_print
 
 @dataclasses.dataclass
 class Card:
-    winning_numbers: Set[int]
-    card_numbers: Set[int]
+    winning_numbers: set[int]
+    card_numbers: set[int]
 
     def match_count(self) -> int:
         return len(self.card_numbers.intersection(self.winning_numbers))
 
 
-def parse_input(input_data: str) -> List[Card]:
+def parse_input(input_data: str) -> list[Card]:
     cards = []
     for line in input_data.splitlines():
         line = line.split(":")[1].strip()
@@ -28,7 +27,7 @@ def parse_input(input_data: str) -> List[Card]:
     return cards
 
 
-def parse_integers(text: str) -> Set[int]:
+def parse_integers(text: str) -> set[int]:
     return {int(m) for m in re.findall(r"[0-9]+", text)}
 
 

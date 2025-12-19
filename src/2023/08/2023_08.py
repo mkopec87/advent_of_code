@@ -1,7 +1,7 @@
 import dataclasses
 import math
 import re
-from typing import Dict, List, Optional, Tuple
+from typing import Optional
 
 from src.utils.data import load_data
 from src.utils.submission import submit_or_print
@@ -71,7 +71,7 @@ def main(debug: bool) -> None:
     submit_or_print(result_part1, result_part2, debug)
 
 
-def parse_input(input_data: str) -> Tuple[List[str], Dict[str, Node]]:
+def parse_input(input_data: str) -> tuple[list[str], dict[str, Node]]:
     lines = input_data.splitlines()
     instructions = list(lines[0])
     nodes = {}

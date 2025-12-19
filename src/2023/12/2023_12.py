@@ -1,6 +1,7 @@
 import functools
 import re
-from typing import Any, Callable, List, Tuple
+from typing import Any
+from collections.abc import Callable
 
 from tqdm import tqdm
 
@@ -8,7 +9,7 @@ from src.utils.data import load_data
 from src.utils.submission import submit_or_print
 
 
-def parse_input(line: str, repeats: int = 1) -> Tuple[str, List[int]]:
+def parse_input(line: str, repeats: int = 1) -> tuple[str, list[int]]:
     spl = line.split(" ")
     row = "?".join([spl[0]] * repeats).strip(".")
     groups = [int(x) for x in spl[1].split(",")]
@@ -16,7 +17,7 @@ def parse_input(line: str, repeats: int = 1) -> Tuple[str, List[int]]:
     return row, groups
 
 
-def calc_groups(row: str) -> List[int]:
+def calc_groups(row: str) -> list[int]:
     groups = []
     group_len: int = 0
     prev_char = "."
@@ -54,7 +55,7 @@ def tuples_to_lists(func: Callable) -> Any:
 @lists_to_tuples
 @functools.lru_cache(maxsize=100_000)
 @tuples_to_lists
-def arrangements(row: str, groups: List[int]) -> int:
+def arrangements(row: str, groups: list[int]) -> int:
     row = row.lstrip(".")
     if "?" not in row:
         expected_groups = calc_groups(row)

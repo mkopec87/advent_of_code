@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import List
 
 
 def main():
@@ -15,7 +14,7 @@ def main():
     print(f"Result part 1: {result_part1}")
 
 
-def read_input(path: str) -> List[str]:
+def read_input(path: str) -> list[str]:
     with open(path) as f:
         return [line.strip() for line in f.readlines()]
 

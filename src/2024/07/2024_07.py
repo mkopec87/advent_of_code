@@ -1,7 +1,6 @@
 import dataclasses
 import operator
 from itertools import product
-from typing import List
 
 from src.utils.data import load_data
 from src.utils.submission import submit_or_print
@@ -10,7 +9,7 @@ from src.utils.submission import submit_or_print
 @dataclasses.dataclass
 class Equation:
     target: int
-    values: List[int]
+    values: list[int]
 
     def possible(self, operators):
         for combination in product(operators, repeat=len(self.values) - 1):
@@ -43,7 +42,7 @@ def main(debug: bool) -> None:
     submit_or_print(result_part1, result_part2, debug)
 
 
-def parse_input(input_data: str) -> List[Equation]:
+def parse_input(input_data: str) -> list[Equation]:
     equations = []
     for line in input_data.splitlines():
         s = line.split(":")

@@ -1,14 +1,13 @@
 from collections import defaultdict, deque
 from dataclasses import dataclass
 from enum import Enum
-from typing import Set, Tuple
 
 import numpy as np
 
 
 @dataclass
 class Elf:
-    position: Tuple[int, ...]
+    position: tuple[int, ...]
 
     def next_pos(self, grid, moves):
         if self.stays(grid):
@@ -77,7 +76,7 @@ class Direction(Enum):
 
 @dataclass
 class Move:
-    checks: Set[Direction]
+    checks: set[Direction]
     direction: Direction
 
 

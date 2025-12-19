@@ -4,7 +4,6 @@ from collections import defaultdict
 from dataclasses import dataclass
 from enum import Enum, auto
 from functools import lru_cache
-from typing import Dict
 
 from tqdm import tqdm
 
@@ -21,8 +20,8 @@ class Resource(Enum):
 
 @dataclass
 class State:
-    robots: Dict[Resource, int]
-    resources: Dict[Resource, int]
+    robots: dict[Resource, int]
+    resources: dict[Resource, int]
 
     def copy(self):
         return State(self.robots.copy(), self.resources.copy())
@@ -42,7 +41,7 @@ class State:
 @dataclass
 class Blueprint:
     id: int
-    robot_costs: Dict
+    robot_costs: dict
 
     def __hash__(self):
         return hash(id)
@@ -51,7 +50,7 @@ class Blueprint:
 @lru_cache(maxsize=None)
 def robot_type_to_time(
     blueprint: Blueprint, state: State, minutes_left: int
-) -> Dict[Resource, int]:
+) -> dict[Resource, int]:
     result = {}
     for robot_type in Resource:
         resources = state.resources.copy()

@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import List, Tuple
 
 from tqdm import tqdm
 
@@ -11,7 +10,7 @@ INPUT_TXT = "input-smaller.txt"
 @dataclass
 class Step:
     on: bool
-    ranges: List[Tuple[int, ...]]
+    ranges: list[tuple[int, ...]]
 
     def within_range(self):
         for r in self.ranges:
@@ -32,7 +31,7 @@ def parse_step(line: str) -> Step:
     return Step(on=on, ranges=ranges)
 
 
-def parse_steps(lines: List[str]) -> List[Step]:
+def parse_steps(lines: list[str]) -> list[Step]:
     return [parse_step(line) for line in lines]
 
 

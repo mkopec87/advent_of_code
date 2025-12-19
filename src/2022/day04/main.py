@@ -1,9 +1,7 @@
-from typing import Tuple
-
 import pandas as pd
 
 
-def parse_line(line: str) -> Tuple[pd.Interval]:
+def parse_line(line: str) -> tuple[pd.Interval]:
     spl = line.split(",")
     return tuple(parse_interval(i) for i in spl)
 

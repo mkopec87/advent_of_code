@@ -1,7 +1,6 @@
 import operator
 import re
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 
@@ -14,7 +13,7 @@ REJECT = "R"
 
 @dataclass
 class Part:
-    ratings: Dict
+    ratings: dict
 
     def score(self):
         return sum(self.ratings.values())
@@ -25,14 +24,14 @@ class Range:
     min: int
     max: int
 
-    def split(self, split: int) -> Tuple["Range", "Range"]:
+    def split(self, split: int) -> tuple["Range", "Range"]:
         assert split + 1 <= self.max
         return Range(self.min, split), Range(split + 1, self.max)
 
 
 @dataclass(frozen=True)
 class Ranges:
-    ranges: Dict[str, Range]
+    ranges: dict[str, Range]
 
     def combinations(self):
         return np.prod([r.max - r.min + 1 for r in self.ranges.values()])
@@ -41,9 +40,9 @@ class Ranges:
 @dataclass
 class Rule:
     result: str
-    property: Optional[str] = None
-    op_str: Optional[str] = None
-    value: Optional[int] = None
+    property: str | None = None
+    op_str: str | None = None
+    value: int | None = None
 
     def __post_init__(self):
         self.has_condition = self.property is not None
@@ -74,7 +73,7 @@ class Rule:
             self.op(prop_range.min, self.value) or self.op(prop_range.max, self.value)
         )
 
-    def split(self, ranges: Ranges) -> Tuple[Ranges, Ranges]:
+    def split(self, ranges: Ranges) -> tuple[Ranges, Ranges]:
         left_ranges = ranges.ranges.copy()
         right_ranges = ranges.ranges.copy()
 
@@ -97,14 +96,14 @@ class Rule:
 @dataclass
 class Workflow:
     name: str
-    rules: List[Rule]
+    rules: list[Rule]
 
     def run_for_part(self, part: Part) -> str:
         for rule in self.rules:
             if rule.matches(part):
                 return rule.result
 
-    def run_for_ranges(self, ranges: Ranges) -> List[Tuple[Ranges, str]]:
+    def run_for_ranges(self, ranges: Ranges) -> list[tuple[Ranges, str]]:
         result = []
         for rule in self.rules:
             # last rule matched
@@ -142,7 +141,7 @@ def main(debug: bool) -> None:
     submit_or_print(result_part1, result_part2, debug)
 
 
-def parse_input(input_data: str) -> Tuple[Dict[str, Workflow], List[Part]]:
+def parse_input(input_data: str) -> tuple[dict[str, Workflow], list[Part]]:
     workflows_str, parts_str = input_data.strip().split("\n\n")
 
     workflows = parse_workflows(workflows_str)
@@ -151,7 +150,7 @@ def parse_input(input_data: str) -> Tuple[Dict[str, Workflow], List[Part]]:
     return workflows, parts
 
 
-def parse_workflows(workflows_str: str) -> Dict[str, Workflow]:
+def parse_workflows(workflows_str: str) -> dict[str, Workflow]:
     workflows = {}
     for line in workflows_str.splitlines():
         m = re.match(r"([a-z]+){(.*)}", line)
@@ -172,7 +171,7 @@ def parse_workflows(workflows_str: str) -> Dict[str, Workflow]:
     return workflows
 
 
-def parse_parts(parts_str: str) -> List[Part]:
+def parse_parts(parts_str: str) -> list[Part]:
     parts = []
     for part_str in parts_str.splitlines():
         ratings = {}
@@ -182,7 +181,7 @@ def parse_parts(parts_str: str) -> List[Part]:
     return parts
 
 
-def solve_part1(parts: List[Part], workflows: Dict[str, Workflow]) -> int:
+def solve_part1(parts: list[Part], workflows: dict[str, Workflow]) -> int:
     accepted_parts = []
 
     for part in parts:
@@ -200,7 +199,7 @@ def solve_part1(parts: List[Part], workflows: Dict[str, Workflow]) -> int:
     return sum([part.score() for part in accepted_parts])
 
 
-def solve_part2(workflows: Dict[str, Workflow]) -> int:
+def solve_part2(workflows: dict[str, Workflow]) -> int:
     accepted_ranges = []
 
     work = [(Ranges({p: Range(1, 4000) for p in ["x", "m", "a", "s"]}), "in")]

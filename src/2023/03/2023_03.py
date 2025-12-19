@@ -1,6 +1,5 @@
 import dataclasses
 import re
-from typing import List
 
 import numpy as np
 
@@ -25,7 +24,7 @@ class Number:
 class Gear:
     row: int
     col: int
-    numbers: List[Number]
+    numbers: list[Number]
 
 
 def main(debug: bool) -> None:

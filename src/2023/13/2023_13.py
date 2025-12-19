@@ -1,5 +1,3 @@
-from typing import List
-
 import numpy as np
 
 from src.utils.data import load_data
@@ -17,7 +15,7 @@ def main(debug: bool) -> None:
     submit_or_print(result_part1, result_part2, debug)
 
 
-def parse_input(input_data: str) -> List[np.array]:
+def parse_input(input_data: str) -> list[np.array]:
     lines = input_data.splitlines()
     lines.append("")
     patterns = []

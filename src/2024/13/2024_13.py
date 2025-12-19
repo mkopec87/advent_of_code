@@ -1,6 +1,5 @@
 import re
 from dataclasses import dataclass
-from typing import List
 
 from src.utils.data import load_data
 from src.utils.submission import submit_or_print
@@ -77,13 +76,13 @@ def main(debug: bool) -> None:
     submit_or_print(result_part1, result_part2, debug)
 
 
-def parse_input(input_data: str) -> List[Machine]:
+def parse_input(input_data: str) -> list[Machine]:
     machines = []
     for machine_str in input_data.split("\n\n"):
         spl = machine_str.split("\n")
         positions = []
         for s in spl:
-            p = re.findall("\d+", s)
+            p = re.findall(r"\d+", s)
             positions.append(Position(int(p[0]), int(p[1])))
         machines.append(
             Machine(

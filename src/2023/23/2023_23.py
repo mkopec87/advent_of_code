@@ -1,5 +1,4 @@
 import itertools
-from typing import Tuple
 
 import networkx as nx
 import numpy as np
@@ -27,7 +26,7 @@ def main(debug: bool) -> None:
     submit_or_print(result_part1, result_part2, debug)
 
 
-def parse_grid(input_data: str) -> Tuple[np.array, Tuple[int, int], Tuple[int, int]]:
+def parse_grid(input_data: str) -> tuple[np.array, tuple[int, int], tuple[int, int]]:
     rows = []
     for line in input_data.strip().splitlines():
         rows.append(list(line))
@@ -48,12 +47,12 @@ def parse_grid(input_data: str) -> Tuple[np.array, Tuple[int, int], Tuple[int, i
     return grid, start, end
 
 
-def solve_part1(grid: np.array, start: Tuple[int, int], end: Tuple[int, int]) -> int:
+def solve_part1(grid: np.array, start: tuple[int, int], end: tuple[int, int]) -> int:
     graph = create_graph(grid)
     return max(map(len, nx.all_simple_paths(graph, start, end))) - 1
 
 
-def solve_part2(grid: np.array, start: Tuple[int, int], end: Tuple[int, int]) -> int:
+def solve_part2(grid: np.array, start: tuple[int, int], end: tuple[int, int]) -> int:
     graph = create_graph(grid, part2=True)
 
     print("Compressing graph...")

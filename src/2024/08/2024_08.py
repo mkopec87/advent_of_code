@@ -2,7 +2,6 @@ import dataclasses
 import math
 from collections import defaultdict
 from itertools import combinations
-from typing import Dict, Set, Tuple
 
 from src.utils.data import load_data
 from src.utils.submission import submit_or_print
@@ -47,7 +46,7 @@ def main(debug: bool) -> None:
     submit_or_print(result_part1, result_part2, debug)
 
 
-def parse_input(input_data: str) -> Tuple[Dict[str, Set[Point]], Point]:
+def parse_input(input_data: str) -> tuple[dict[str, set[Point]], Point]:
     letter_to_antennas = defaultdict(set)
     lines = input_data.splitlines()
     for x, line in enumerate(lines):
@@ -59,8 +58,8 @@ def parse_input(input_data: str) -> Tuple[Dict[str, Set[Point]], Point]:
 
 
 def antinodes_part1(
-    letter_to_antennas: Dict[str, Set[Point]], shape: Point
-) -> Set[Point]:
+    letter_to_antennas: dict[str, set[Point]], shape: Point
+) -> set[Point]:
     antinodes = set()
     for letter, antennas in letter_to_antennas.items():
         for antenna1, antenna2 in combinations(antennas, 2):
@@ -74,8 +73,8 @@ def antinodes_part1(
 
 
 def antinodes_part2(
-    letter_to_antennas: Dict[str, Set[Point]], shape: Point
-) -> Set[Point]:
+    letter_to_antennas: dict[str, set[Point]], shape: Point
+) -> set[Point]:
     antinodes = set()
     for letter, antennas in letter_to_antennas.items():
         for antenna1, antenna2 in combinations(antennas, 2):

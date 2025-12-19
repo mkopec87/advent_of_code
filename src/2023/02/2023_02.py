@@ -4,7 +4,6 @@ import operator
 import re
 from collections import defaultdict
 from functools import reduce
-from typing import List
 
 from src.utils.data import load_data
 from src.utils.submission import submit_or_print
@@ -24,7 +23,7 @@ class Pull:
 @dataclasses.dataclass
 class Game:
     game_id: int
-    pulls: List[Pull]
+    pulls: list[Pull]
 
     def possible(self, start_counts: dict[Color, int]) -> bool:
         for pull in self.pulls:
@@ -41,7 +40,7 @@ class Game:
         return reduce(operator.mul, min_counts.values())
 
 
-def parse_games(input_data: str) -> List[Game]:
+def parse_games(input_data: str) -> list[Game]:
     games = []
 
     for line in input_data.split("\n"):

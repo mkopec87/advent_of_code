@@ -1,5 +1,4 @@
 import enum
-from typing import Set, Tuple
 
 import numpy as np
 
@@ -36,7 +35,7 @@ class Pipe:
         self.neighbours = set()
         self.visited = False
 
-    def connected_positions(self) -> Set[Tuple[int, int]]:
+    def connected_positions(self) -> set[tuple[int, int]]:
         match self.type:
             case PipeType.NS:
                 return {N, S}
@@ -90,9 +89,12 @@ def parse_grid(input_data: str) -> np.array:
         for xd, yd in pipe.connected_positions():
             neighbour_pipe: Pipe = grid[x + xd, y + yd]
             if (
-                -xd,
-                -yd,
-            ) in neighbour_pipe.connected_positions():  # we need both-sides relationship :)
+                (
+                    -xd,
+                    -yd,
+                )
+                in neighbour_pipe.connected_positions()
+            ):  # we need both-sides relationship :)
                 pipe.add_neighbour(neighbour_pipe)
     return grid
 
