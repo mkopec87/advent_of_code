@@ -1,107 +1,107 @@
-from collections import namedtuple
+from typing import NamedTuple
 from itertools import combinations, product
-from matplotlib.path import Path
+import numpy as np
 from src.utils.data import load_data
 from src.utils.submission import submit_or_print
 
-Point = namedtuple("Point", ["x", "y"])
-Segment = namedtuple("Segment", ["start", "end"])
 
-
-def area(point1: Point, point2: Point) -> int:
-    return (abs(point1.x - point2.x) + 1) * (abs(point1.y - point2.y) + 1)
-
-
-def no_points_inside(point1, point2, points):
-    x1, x2 = point1.x, point2.x
-    if x1 > x2:
-        x1, x2 = x2, x1
-    y1, y2 = point1.y, point2.y
-    if y1 > y2:
-        y1, y2 = y2, y1
-
-    for point in points:
-        if x1 < point.x < x2 and y1 < point.y < y2:
-            return False
-    return True
-
-
-def polygon(points):
-    return [
-        Segment(point_from, point_to)
-        for point_from, point_to in zip(points, points[1:] + points[0:1])
-    ]
-
-
-def ccw(A, B, C):
-    return (C.y - A.y) * (B.x - A.x) > (B.y - A.y) * (C.x - A.x)
-
-
-def intersect(A, B, C, D):
-    return ccw(A, C, D) != ccw(B, C, D) and ccw(A, B, C) != ccw(A, B, D)
-
-
-def intersects(lines1, lines2):
-    print("checking...")
-    print(lines1)
-    print(lines2)
-
-    for line1, line2 in product(lines1, lines2):
-        if intersect(line1.start, line1.end, line2.start, line2.end):
-            print("intersect!")
-            print(line1, line2)
-            return True
-    print("no intersections")
-    return False
-
-
-def rectangle(point1, point2):
-    xs = sorted([point1.x, point2.x])
-    ys = sorted([point1.y, point2.y])
-    points = [
-        Point(xs[0], ys[0]),
-        Point(xs[0], ys[1]),
-        Point(xs[1], ys[1]),
-        Point(xs[1], ys[0]),
-    ]
-    return polygon(points)
+class Point(NamedTuple):
+    x: int
+    y: int
 
 
 def main(debug: bool) -> None:
     input_data = load_data(debug)
 
-    points = [Point(*map(int, line.split(","))) for line in input_data.splitlines()]
+    points = parse_input(input_data)
     print(len(points), "points")
 
-    result_part1 = max(
-        area(point1, point2) for point1, point2 in combinations(points, 2)
+    result_part1 = solve_part1(points)
+    result_part2 = solve_part2(points)
+
+    submit_or_print(result_part1, result_part2, debug)
+
+
+def parse_input(input_data: str) -> list[Point]:
+    return [
+        Point(*map(int, reversed(line.split(",")))) for line in input_data.splitlines()
+    ]
+
+
+def solve_part1(points: list[Point]) -> int:
+    return max(area(point1, point2) for point1, point2 in combinations(points, 2))
+
+
+def solve_part2(points: list[Point]) -> int:
+    original_to_compressed = compress_points(points)
+    compressed_points = list(original_to_compressed.values())
+    matrix = fill_polygon(compressed_points)
+
+    return max(
+        [
+            area(point1, point2)
+            for point1, point2 in combinations(points, 2)
+            if inside_polygon(point1, point2, original_to_compressed, matrix)
+        ]
     )
 
-    polygon = Path(points)
-    print(polygon)
-    result_part2 = max(
-        area(point1, point2)
-        for point1, point2 in combinations(points, 2)
-        if not polygon.intersects_path(Path(rectangle(point1, point2)))
-    )
 
-    print(polygon.contains_point((5, 5)))
-
-    result_part2 = None
+def fill_polygon(points: list[Point]) -> np.ndarray:
     xs = sorted({p.x for p in points})
     ys = sorted({p.y for p in points})
 
-    print("Xs:", min(xs), max(xs), "all", xs)
-    print("Ys:", min(ys), max(ys), "all", ys)
+    matrix = np.zeros((len(xs), len(ys)), dtype=bool)
 
-    x_map = {x: i for i, x in enumerate(xs)}
-    y_map = {y: i for i, y in enumerate(ys)}
+    lines = list(zip(points, points[1:] + points[:1]))
+    lines_up = [tuple(sorted([p1, p2])) for p1, p2 in lines if p1.y == p2.y]
+    lines_right = [tuple(sorted([p1, p2])) for p1, p2 in lines if p1.x == p2.x]
 
-    mapped_points = [Point(x_map[p.x], y_map[p.y]) for p in points]
-    print(points)
-    print(mapped_points)
+    for p1, p2 in lines_up:
+        for x in range(min(p1.x, p2.x), max(p1.x, p2.x) + 1):
+            matrix[x, p1.y] = True
+    for p1, p2 in lines_right:
+        for y in range(p1.y, p2.y + 1):
+            matrix[p1.x, y] = True
 
-    submit_or_print(result_part1, result_part2, debug)
+    for x in range(matrix.shape[0]):
+        for y in range(matrix.shape[1]):
+            crossings = 0
+            for p1, p2 in lines_up:
+                if p1.x < x <= p2.x and y >= p1.y:
+                    crossings += 1
+            if crossings % 2 == 1:
+                matrix[x, y] = True
+    return matrix
+
+
+def compress_points(points: list[Point]) -> dict[Point, Point]:
+    xs = sorted({p.x for p in points})
+    ys = sorted({p.y for p in points})
+    x_to_idx = {x: i for i, x in enumerate(xs)}
+    y_to_idx = {y: i for i, y in enumerate(ys)}
+    return {p: Point(x_to_idx[p.x], y_to_idx[p.y]) for p in points}
+
+
+def inside_polygon(
+    point1: Point,
+    point2: Point,
+    original_to_compressed: dict[Point, Point],
+    matrix: np.ndarray,
+) -> bool:
+    x1, y1 = original_to_compressed[point1]
+    x2, y2 = original_to_compressed[point2]
+    all_filled = True
+    for x, y in product(
+        range(min(x1, x2), max(x1, x2) + 1), range(min(y1, y2), max(y1, y2) + 1)
+    ):
+        if not matrix[x, y]:
+            all_filled = False
+            break
+    return all_filled
+
+
+def area(point1: Point, point2: Point) -> int:
+    return (abs(point1.x - point2.x) + 1) * (abs(point1.y - point2.y) + 1)
 
 
 if __name__ == "__main__":
