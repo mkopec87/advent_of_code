@@ -32,6 +32,10 @@ def solve_part1(points: list[Point]) -> int:
     return max(area(point1, point2) for point1, point2 in combinations(points, 2))
 
 
+def area(point1: Point, point2: Point) -> int:
+    return (abs(point1.x - point2.x) + 1) * (abs(point1.y - point2.y) + 1)
+
+
 def solve_part2(points: list[Point]) -> int:
     original_to_compressed = compress_points(points)
     compressed_points = list(original_to_compressed.values())
@@ -98,10 +102,6 @@ def inside_polygon(
             all_filled = False
             break
     return all_filled
-
-
-def area(point1: Point, point2: Point) -> int:
-    return (abs(point1.x - point2.x) + 1) * (abs(point1.y - point2.y) + 1)
 
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@ repos:
     -   id: pre-commit-update
 
 -   repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.9.17
+    rev: 0.9.18
     hooks:
       # Update the uv lockfile
     -   id: uv-lock
@@ -66,7 +66,7 @@ repos:
     -   id: yamllint
 
 -   repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.9
+    rev: v0.14.10
     hooks:
       # Run the linter
     -   id: ruff-check
