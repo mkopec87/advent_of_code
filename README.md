@@ -9,7 +9,7 @@ library. The sample input files are not original ones, but created by myself.
 
 | Year |                                Stars                                |                          Days completed                          |
 |:----:|:-------------------------------------------------------------------:|:----------------------------------------------------------------:|
-| 2025 | ![](https://img.shields.io/badge/2025%20stars%20&#11088;-22-yellow)  | ![](https://img.shields.io/badge/2025%20days%20completed-10-red)  |
+| 2025 | ![](https://img.shields.io/badge/2025%20stars%20&#11088;-24-yellow)  | ![](https://img.shields.io/badge/2025%20days%20completed-12-red)  |
 | 2024 | ![](https://img.shields.io/badge/2024%20stars%20&#11088;-50-yellow) | ![](https://img.shields.io/badge/2024%20days%20completed-25-red) |
 | 2023 | ![](https://img.shields.io/badge/2023%20stars%20&#11088;-50-yellow) | ![](https://img.shields.io/badge/2023%20days%20completed-25-red) |
 | 2022 | ![](https://img.shields.io/badge/2022%20stars%20&#11088;-50-yellow) | ![](https://img.shields.io/badge/2022%20days%20completed-25-red) |
